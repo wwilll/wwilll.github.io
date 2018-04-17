@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="基础 html  1、html5新特性、画布、媒体元素、本地存储、编辑拖拽、新跨域机制、地理位置及文件等API、多平台兼容(PC,手机)   2、xhtml  3、xml css  1、css  2、css3新特性、动画效果  javascript  1、原生js：原型链、闭包、单线程异步等核心理解  2、jQuery，Zepto，bootstrap，swiper等框架应用  3、阅读源码，理解框">
+<meta name="description" content="基础 html  1、html5新特性、画布、媒体元素、本地存储、编辑拖拽、新跨域机制、地理位置及文件等API、多平台兼容(PC,手机) 存储：     cookie：本身由于C/S通讯，借用来存储，使用document.cookie = 获取和修改         存储量4KB,http请求携带(影响效率),API简单需封装     localStorage：H5专为存储设计(在浏览器中不清理则">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端笔记">
 <meta property="og:url" content="http://wwilll.github.io/third-article.html">
 <meta property="og:site_name" content="LeoBlog">
-<meta property="og:description" content="基础 html  1、html5新特性、画布、媒体元素、本地存储、编辑拖拽、新跨域机制、地理位置及文件等API、多平台兼容(PC,手机)   2、xhtml  3、xml css  1、css  2、css3新特性、动画效果  javascript  1、原生js：原型链、闭包、单线程异步等核心理解  2、jQuery，Zepto，bootstrap，swiper等框架应用  3、阅读源码，理解框">
+<meta property="og:description" content="基础 html  1、html5新特性、画布、媒体元素、本地存储、编辑拖拽、新跨域机制、地理位置及文件等API、多平台兼容(PC,手机) 存储：     cookie：本身由于C/S通讯，借用来存储，使用document.cookie = 获取和修改         存储量4KB,http请求携带(影响效率),API简单需封装     localStorage：H5专为存储设计(在浏览器中不清理则">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-15T04:49:03.828Z">
+<meta property="og:updated_time" content="2018-04-17T08:40:10.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端笔记">
-<meta name="twitter:description" content="基础 html  1、html5新特性、画布、媒体元素、本地存储、编辑拖拽、新跨域机制、地理位置及文件等API、多平台兼容(PC,手机)   2、xhtml  3、xml css  1、css  2、css3新特性、动画效果  javascript  1、原生js：原型链、闭包、单线程异步等核心理解  2、jQuery，Zepto，bootstrap，swiper等框架应用  3、阅读源码，理解框">
+<meta name="twitter:description" content="基础 html  1、html5新特性、画布、媒体元素、本地存储、编辑拖拽、新跨域机制、地理位置及文件等API、多平台兼容(PC,手机) 存储：     cookie：本身由于C/S通讯，借用来存储，使用document.cookie = 获取和修改         存储量4KB,http请求携带(影响效率),API简单需封装     localStorage：H5专为存储设计(在浏览器中不清理则">
 
 
 
@@ -363,39 +363,86 @@
       
         <h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><ul>
 <li>html<br>  1、html5<pre><code>新特性、画布、媒体元素、本地存储、编辑拖拽、新跨域机制、地理位置及文件等API、多平台兼容(PC,手机)
+存储：
+    cookie：本身由于C/S通讯，借用来存储，使用document.cookie = 获取和修改
+        存储量4KB,http请求携带(影响效率),API简单需封装
+    localStorage：H5专为存储设计(在浏览器中不清理则永久存储)
+        存储量5MB，使用简单
+        localStorage.setItem(key,value);
+        localStorage.getItem(key);
+        //ios safari隐藏模式下，localStorage.getItem会报错，建议统一使用try-catch封装
+    sessionStorage：H5专为存储设计(关闭会话或浏览器时清理)
+        存储量5MB，使用类似localstorage
 </code></pre>  2、xhtml<br>  3、xml</li>
 <li>css<br>  1、css<br>  2、css3<pre><code>新特性、动画效果
 </code></pre></li>
 <li>javascript<br>  1、原生js：原型链、闭包、单线程异步等核心理解<br>  2、jQuery，Zepto，bootstrap，swiper等框架应用<br>  3、阅读源码，理解框架原理</li>
-<li>浏览器兼容性<br>  1、内核<br>  2、基础属性支持</li>
+<li>浏览器兼容性<br>  1、内核<pre><code>Trident内核(IE内核)
+webkit内核(Safari)
+Gecko内核(Firefox)
+Blink内核(Chrome)
+</code></pre>  2、基础属性支持</li>
+</ul>
+<h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><ul>
+<li>含义<br>  浏览器同源策略，不予许访问域外接口<br>  跨域条件：协议、域名、端口，有一个不同就算跨域<br>  可跨域的三个标签：<pre><code>&lt; img src=xxx&gt;    打点统计(统计网址可能为其他域：百度统计，站长统计，谷歌分析)
+&lt; link href=xxx&gt;    引用CDN
+&lt; script src=xxx&gt;     引用CDN，用于JSONP
+</code></pre>  所有跨域请求都必须经过信息提供方允许(否则即为同源策略漏洞)</li>
+<li><p>JSONP原理<br>  加载一个文件(服务器端不一定真有，可根据请求动态生成并返回)</p>
+<pre><code>假设网站需要跨域访问xx.com的一个接口
+其提供的地址为&quot;http://xx.com/api.js&quot;
+返回内容格式为callback({x:1,y:2})(动态生成)
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">window.callback = function(data)&#123;</span><br><span class="line">	console.log(data);</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script src=&quot;http://xx.com/api.js&quot;&gt;&lt;/script&gt; //返回callback(&#123;x:1,y:2&#125;),执行已经定义好的函数</span><br></pre></td></tr></table></figure>
+</code></pre></li>
+<li><p>http header(服务器端设置)</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//不同后端语言可能写法不一样</span><br><span class="line">response.setHeader(&quot;Access-Control-Allow-Origin&quot;,&quot;http://a.com,http://b.com&quot;); //第二个参数不建议写&quot;*&quot;</span><br><span class="line">response.setHeader(&quot;Access-Control-Allow-Headers&quot;,&quot;X-Requested-With&quot;);</span><br><span class="line">response.setHeader(&quot;Access-Control-Allow-Methods&quot;,&quot;PUT,POST,GET,DELETE.OPTIONS&quot;);</span><br><span class="line">//接收跨域的cookie</span><br><span class="line">response.setHeader(&quot;Access-Control-Allow-Credentials&quot;,&quot;true&quot;);</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><ul>
-<li>理解模块化含义</li>
-<li>requirejs,commentjs</li>
+<li>理解模块化含义<br>  不使用模块化：需要全部引入所需js文件并且互相暴露全局变量及函数<br>  使用模块化：引用所需js，被引用的js吐出变量给引用js，不暴露给全局</li>
+<li>AMD(异步模块定义)<br>  requirejs<pre><code>全局define函数
+全局require函数
+依赖的JS会自动、异步加载
+</code></pre></li>
+<li>CommontJS(使用npm时建议)<br>  nodejs模块化规范，现被大量用于前端<br>  前端开发依赖库和插件，都可从npm获取<br>  构建工具自动化，使用npm成本低<br>  CommonJS不是异步加载，而是同步一次性加载</li>
 </ul>
-<h2 id="打包部署"><a href="#打包部署" class="headerlink" title="打包部署"></a>打包部署</h2><ul>
-<li>打包意义及原理</li>
-<li>打包工具(webpack等优劣)</li>
+<h2 id="构建工具"><a href="#构建工具" class="headerlink" title="构建工具"></a>构建工具</h2><ul>
+<li>简介<br>  grunt,gulp,fis3,webpack(need node,npm)<br>  http-server搭建(浏览静态网页)<br>  npm install http-server -g<br>  进入静态页面所在文件夹执行<br>  http-server -p 8081<br>  npm init  //初始化(生成package.json)<br>  npm install webpack –save-dev  //保存webpack到开发环境<br>  npm install jquery –save  //生产环境也需要(因此不加-dev)<br>  npm install moment –save  //演示安装模块<br>  npm uninstall moment –save  //演示卸载模块</li>
 </ul>
-<h2 id="前端三大框架"><a href="#前端三大框架" class="headerlink" title="前端三大框架"></a>前端三大框架</h2><ul>
-<li>理解框架类型及区别</li>
+<h2 id="上线回滚"><a href="#上线回滚" class="headerlink" title="上线回滚"></a>上线回滚</h2><ul>
+<li>流程<br>  各公司具体流程及工具不同(要点如下)<br>  上线：<br>  1.将测试完成代码提交到git的master分支<br>  2.将当前服务器代码全部打包并记录版本号，备份<br>  3.将master分支的代码覆盖到服务器，生产新版本号<br>  回滚：<br>  1.将当前服务器代码全部打包并记录版本号，备份<br>  2.将备份的上一个版本解压覆盖到服务器，并生产新的版本号</li>
+</ul>
+<h2 id="前端三大框架-Angular-React-Vue"><a href="#前端三大框架-Angular-React-Vue" class="headerlink" title="前端三大框架(Angular,React,Vue)"></a>前端三大框架(Angular,React,Vue)</h2><ul>
+<li>理解框架类型及区别<br>  mvc(angular)<br>  mv*</li>
 <li>vue优势及其开发环境</li>
 <li>node,npm应用</li>
 </ul>
 <h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><ul>
 <li>核心<br>  1、多利用内存及缓存或其他<br>  2、减少CPU计算，减少网络请求</li>
-<li>方法<br>  1、减少http请求次数<pre><code>打包css，js文件
-lazyLoad
-</code></pre>  2、控制资源加载优先级<pre><code>原则上css提前，js提后
-</code></pre>  3、浏览器缓存<br>  4、使用cdn<br>  5、减少DOM操作</li>
+<li><p>方法<br>  1、减少http请求次数</p>
+<pre><code>打包css，js文件(静态资源压缩合并)
+</code></pre><p>  2、渲染优化</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">//原则上css提前，js提后</span><br><span class="line">//lazyLoad(下拉加载更多或缩略图替换)</span><br><span class="line">//设置很小的缩略图a.png,当需要用时通过js加载真实图片地址</span><br><span class="line">	&lt;img id=&quot;img&quot; src=&quot;a.png&quot; realsrc=&quot;b.png&quot;/&gt;</span><br><span class="line">	&lt;script&gt;</span><br><span class="line">		var img = document.getElementById(&apos;img&apos;);</span><br><span class="line">		img.src = img.getAttribute(&apos;realsrc&apos;);</span><br><span class="line">	&lt;/script&gt;</span><br><span class="line">//减少DOM操作(缓存DOM查询,合并操作)</span><br><span class="line">	//未缓存DOM查询</span><br><span class="line">	for(var i = 0;i&lt;document.getElementsByTagName(&apos;p&apos;).length;i++)&#123;</span><br><span class="line">		//</span><br><span class="line">	&#125;</span><br><span class="line">	//缓存DOM查询</span><br><span class="line">	var pList = document.getElementsByTagName(&apos;p&apos;);</span><br><span class="line">	for(var i=0;i&lt;pList.length;i++)&#123;</span><br><span class="line">		//</span><br><span class="line">	&#125;</span><br><span class="line">	//多个操作合并执行</span><br><span class="line">	var listNode = document.getElementsById(&apos;list&apos;);</span><br><span class="line">	var frag = document.createDocumentFragment(); //定义片段</span><br><span class="line">	for(var x=0;x&lt;10;x++)&#123;</span><br><span class="line">		var li = document.createElement(&quot;li&quot;);</span><br><span class="line">		li.innerHTML = &apos;list &apos;+ x;</span><br><span class="line">		frag.appendChild(li);  //插入片段，不操作DOM</span><br><span class="line">	&#125;</span><br><span class="line">	listNode.appendChild(frag);  //一次DOM插入</span><br><span class="line">//事件节流(例子)</span><br><span class="line">	var textarea = document.getElementById(&apos;text&apos;);</span><br><span class="line">	var timeoutId;</span><br><span class="line">	textarea.addEventListener(&apos;keyup&apos;,function()&#123;</span><br><span class="line">		if(timeoutId)&#123;</span><br><span class="line">			clearTimeout(timeoutId);</span><br><span class="line">		&#125;</span><br><span class="line">		timeoutId = setTimeout(function()&#123;</span><br><span class="line">			//当key事件间隔小于100ms(快速击键)时，timeoutId定时器被清空，减少计算次数</span><br><span class="line">		&#125;,100)</span><br><span class="line">	&#125;)</span><br><span class="line">尽早执行操作(如DOMContentLoaded)</span><br></pre></td></tr></table></figure>
+</code></pre><p>  3、浏览器缓存<br>  4、使用cdn(bootcdn,百度cdn等)<br>  5、SSR服务端渲染，数据直接输出到HTML(JSP,PHP,ASP)<br>  6、减小Cookie大小<br>  7、优化JavaScript代码</p>
+</li>
 </ul>
-<h2 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h2><ul>
-<li>常见攻击方式</li>
-<li>xss、xsrf应对</li>
+<h2 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h2><pre><code>出于性能考虑，此块最好由后端处理
+</code></pre><ul>
+<li>常见攻击方式<br>  xss(Cross-site scripting 跨站脚本攻击)<pre><code>例子：在发布的内容中插入一段&lt; script&gt;，用户访问时获取cookie发送到攻击者服务器
+预防：&lt;,&gt;替换为&amp;lt,&amp;gt.前后端均可替换，考虑到性能，最好后端替换
+</code></pre>  xsrf(Cross-site request forgery 跨站请求伪造)<pre><code>例子：登录购物网站，假设有一个无验证的付费接口&quot;xxx&quot;，若收到文件(如邮件)中隐藏&lt; img src=&quot;xxx&quot;&gt;,则当你查看时就会悄悄付款
+解决：增加验证流程，如指纹，密码等
+</code></pre></li>
 </ul>
-<h2 id="多人协作"><a href="#多人协作" class="headerlink" title="多人协作"></a>多人协作</h2><ul>
-<li>linux简单命令</li>
-<li>git操作</li>
+<h2 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h2><ul>
+<li>IDE<br>  vscode,sublime,webstorm,atom(github),插件</li>
+<li>git(coding.net,github.com,公司自己的git服务器)<br>  git add .  //添加全部<br>  git checkout xx  //还原文件<br>  git commit -m “xx”<br>  git push origin master<br>  git pull origin master<br>  git branch  //查看当前分支<br>  git checkout -b xx  //新建分支<br>  git checkout xx  //切换分支<br>  git merge xx</li>
+<li>linux<br>  基本命令：<br>  mkdir directory  //创建目录<br>  ls      //查看当前目录文件<br>  ll      //查看当前目录文件详细信息<br>  pwd     //查看当前所在目录<br>  cd /    //：进入根目录（/表示根目录）<br>  cd etc  //进入etc目录<br>  cd ..   //返回上级目录<br>  vi a.js //编辑a.js文件(无则创建)<br>  rm -rf xx  //删除xx文件夹<br>  rm a.js //删除文件<br>  cp a.js b.js  //复制a.js命名为b.js<br>  mv a.js src/a.js  //移动文件<br>  cat a.js  //查看内容<br>  head a.js  //查看头部内容<br>  tail a.js  //查看尾部内容<br>  head -n 2 a.js  //查看前两行(指定行)内容<br>  grep ‘2’ a.js  //搜索</li>
+</ul>
+<h2 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h2><ul>
+<li>资源加载过程<br>  1.地址栏输入域名回车<br>  2.浏览器根据DNS得到域名对应的IP<br>  3.与该服务器建立TCP连接(三次握手)<br>  4.web浏览器向web服务器发送请求命令及请求头和请求体信息<br>  5.web服务器发送响应头信息及数据<br>  6.web服务器关闭TCP连接(四次挥手)</li>
+<li>浏览器渲染页面过程<br>  1.根据请求的HTML生成DOM树<br>  2.根据CSS生成CSSOM<br>  3.将DOM和CSSOM整合成RenderTree<br>  4.浏览器根据RenderTree渲染<br>  5.遇到&lt; script&gt;时，执行js并阻塞渲染</li>
 </ul>
 
       
@@ -599,7 +646,7 @@ lazyLoad
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块化"><span class="nav-number">2.</span> <span class="nav-text">模块化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打包部署"><span class="nav-number">3.</span> <span class="nav-text">打包部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端三大框架"><span class="nav-number">4.</span> <span class="nav-text">前端三大框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能优化"><span class="nav-number">5.</span> <span class="nav-text">性能优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全"><span class="nav-number">6.</span> <span class="nav-text">安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多人协作"><span class="nav-number">7.</span> <span class="nav-text">多人协作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨域"><span class="nav-number">2.</span> <span class="nav-text">跨域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块化"><span class="nav-number">3.</span> <span class="nav-text">模块化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建工具"><span class="nav-number">4.</span> <span class="nav-text">构建工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上线回滚"><span class="nav-number">5.</span> <span class="nav-text">上线回滚</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端三大框架-Angular-React-Vue"><span class="nav-number">6.</span> <span class="nav-text">前端三大框架(Angular,React,Vue)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能优化"><span class="nav-number">7.</span> <span class="nav-text">性能优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全"><span class="nav-number">8.</span> <span class="nav-text">安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发环境"><span class="nav-number">9.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行环境"><span class="nav-number">10.</span> <span class="nav-text">运行环境</span></a></li></ol></div>
             
 
           </div>
